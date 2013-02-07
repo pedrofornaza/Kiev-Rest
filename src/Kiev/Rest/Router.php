@@ -35,7 +35,20 @@ class Router
 		return $this->routes;
 	}
 
-	public function match($request) {
+	public function run($request)
+	{
+		$args = $this->parseRequest($request);
+		$target = $this->match($args);
+		if (!$target) {
+			header('HTTP/1.1 404 Not Found');
+			return;
+		}
+
+		return $this->dispatch($target, $args);
+	}
+
+	public function parseRequest($request)
+	{
 		if (!isset($request['REQUEST_METHOD']) ||
 			!isset($request['REQUEST_URI'])
 		) {
@@ -43,14 +56,61 @@ class Router
 		}
 
 		$method = strtoupper($request['REQUEST_METHOD']);
-		$uri = parse_url($request['REQUEST_URI']);
-		$uri = $uri['path'];
+		$uri = $request['REQUEST_URI'];
+		$params = array();
+
 		if ($uri !== '/') {
+			$uriParts = $this->explodeUri($request['REQUEST_URI']);
+			$params = $this->extractParamsFromUri($uriParts);
+			$uri = $this->rebuildUri($uriParts);
 			$uri = rtrim($uri, '/');
 		}
 
+		return array(
+			'method' => $method, 
+			'uri' => $uri,
+			'params' => $params,
+		);
+	}
+
+	public function explodeUri($uri)
+	{
+		$uri = parse_url($uri);
+		$uri = $uri['path'];
+
+		$pattern = '#[a-zA-Z0-9]{1,}/[a-zA-Z0-9]{1,}#';
+
+		$matches = array();
+		preg_match_all($pattern, $uri, $matches);
+
+		return current($matches);
+	}
+
+	public function rebuildUri($uriParts)
+	{
+		foreach ($uriParts as &$part) {
+			list($resource) = explode('/', $part);
+			$part = $resource.'/*';
+		}
+
+		return implode('/', $uriParts);
+	}
+
+	public function extractParamsFromUri($uriParts)
+	{
+		$params = array();
+		foreach($uriParts as $part) {
+			list($key, $value) = explode('/', $part);
+			$params[$key] = $value;
+		}
+
+		return $params;
+	}
+
+	public function match($args)
+	{
 		foreach ($this->routes as $route) {
-			if ($route->match($method, $uri)) {
+			if ($route->match($args['method'], $args['uri'])) {
 				return $route->getTarget();
 			}
 		}
@@ -58,6 +118,13 @@ class Router
 		return false;
 	}
 
+	public function dispatch($target, $args)
+	{
+		if (is_string($target)) {
+			$target = new $target;
+		}
 
+		return call_user_func_array(array($target, $args['method']), $args['params']);
+	}
 }
 

@@ -53,7 +53,30 @@ class RouterTest extends \PHPUnit_Framework_TestCase
 		$instance->addRoute('invalid_route');
 	}
 
-	public function testMatch() {
+	public function testParseRequest()
+	{
+		$instance = new Router();
+
+		$method = 'GET';
+		$uri = '/';
+
+		$request = array(
+			'REQUEST_METHOD' => $method,
+			'REQUEST_URI'	 => $uri,
+		);
+
+		$expectedReturn = array(
+			'method' => $method, 
+			'uri' => $uri,
+			'params' => array(),
+		);
+
+		$parsedRequest = $instance->parseRequest($request);
+		$this->assertEquals($parsedRequest, $expectedReturn);
+	}
+
+	public function testMatch()
+	{
 		$instance = new Router();
 
 		$method = 'GET';
@@ -63,8 +86,8 @@ class RouterTest extends \PHPUnit_Framework_TestCase
 		$instance->addRoute($route);
 
 		$request = array(
-			'REQUEST_METHOD' => $method,
-			'REQUEST_URI'	 => $uri,
+			'method' => $method,
+			'uri'	 => $uri,
 		);
 
 		$matchedTarget = $instance->match($request);
