@@ -4,96 +4,96 @@ namespace Kiev\Rest;
 
 class RouterTest extends \PHPUnit_Framework_TestCase
 {
-	public function testConstructWithoutParams()
-	{
-		$instance = new Router();
+    public function testConstructWithoutParams()
+    {
+        $instance = new Router();
 
-		$this->assertInstanceOf('Kiev\Rest\Router', $instance);
-	}
+        $this->assertInstanceOf('Kiev\Rest\Router', $instance);
+    }
 
-	public function testAddRouteWithObjectRoute()
-	{
-		$instance = new Router();
-		$route = new Route('GET', '/', 'stdClass');
+    public function testAddRouteWithObjectRoute()
+    {
+        $instance = new Router();
+        $route = new Route('GET', '/', 'stdClass');
 
-		$instance->addRoute($route);
+        $instance->addRoute($route);
 
-		$this->assertContains($route, $instance->getRoutes());
-	}
+        $this->assertContains($route, $instance->getRoutes());
+    }
 
-	public function testAddRouteWithArrayRoute()
-	{
-		$instance = new Router();
-		$method = 'GET';
-		$uri = '/';
-		$target = 'stdClass';
+    public function testAddRouteWithArrayRoute()
+    {
+        $instance = new Router();
+        $method = 'GET';
+        $uri = '/';
+        $target = 'stdClass';
 
-		$route = array(
-			'method' => $method,
-			'uri'	 => $uri,
-			'target' => $target,
-		);
+        $route = array(
+            'method' => $method,
+            'uri'    => $uri,
+            'target' => $target,
+        );
 
-		$instance->addRoute($route);
+        $instance->addRoute($route);
 
-		$routes = $instance->getRoutes();
-		$this->assertContainsOnlyInstancesOf('Kiev\Rest\Route', $routes);
+        $routes = $instance->getRoutes();
+        $this->assertContainsOnlyInstancesOf('Kiev\Rest\Route', $routes);
 
-		$routeObject = new Route($method, $uri, $target);
-		$this->assertEquals($routeObject, current($routes));
-	}
+        $routeObject = new Route($method, $uri, $target);
+        $this->assertEquals($routeObject, current($routes));
+    }
 
-	/**
-	 * @expectedException InvalidArgumentException
-	 */
-	public function testAddRouteWithInvalidRoute()
-	{
-		$instance = new Router();
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    public function testAddRouteWithInvalidRoute()
+    {
+        $instance = new Router();
 
-		$instance->addRoute('invalid_route');
-	}
+        $instance->addRoute('invalid_route');
+    }
 
-	public function testParseRequest()
-	{
-		$instance = new Router();
+    public function testParseRequest()
+    {
+        $instance = new Router();
 
-		$method = 'GET';
-		$uri = '/';
+        $method = 'GET';
+        $uri = '/';
 
-		$request = array(
-			'REQUEST_METHOD' => $method,
-			'REQUEST_URI'	 => $uri,
-		);
+        $request = array(
+            'REQUEST_METHOD' => $method,
+            'REQUEST_URI'    => $uri,
+        );
 
-		$expectedReturn = array(
-			'method' => $method, 
-			'uri' => $uri,
-			'params' => array(),
-		);
+        $expectedReturn = array(
+            'method' => $method, 
+            'uri' => $uri,
+            'params' => array(),
+        );
 
-		$parsedRequest = $instance->parseRequest($request);
-		$this->assertEquals($parsedRequest, $expectedReturn);
-	}
+        $parsedRequest = $instance->parseRequest($request);
+        $this->assertEquals($parsedRequest, $expectedReturn);
+    }
 
-	public function testMatch()
-	{
-		$instance = new Router();
+    public function testMatch()
+    {
+        $instance = new Router();
 
-		$method = 'GET';
-		$uri = '/';
-		$target = 'stdClass';
-		$route = new Route($method, $uri, $target);
-		$instance->addRoute($route);
+        $method = 'GET';
+        $uri = '/';
+        $target = 'stdClass';
+        $route = new Route($method, $uri, $target);
+        $instance->addRoute($route);
 
-		$request = array(
-			'method' => $method,
-			'uri'	 => $uri,
-		);
+        $request = array(
+            'method' => $method,
+            'uri'    => $uri,
+        );
 
-		$matchedTarget = $instance->match($request);
+        $matchedTarget = $instance->match($request);
 
-		$this->assertEquals($target, $matchedTarget);
-	}
+        $this->assertEquals($target, $matchedTarget);
+    }
 
 
 }
