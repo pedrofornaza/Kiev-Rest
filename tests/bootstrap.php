@@ -2,7 +2,7 @@
 
 define('ROOT_PATH', realpath('./'));
 define('SRC_PATH', realpath(ROOT_PATH .DIRECTORY_SEPARATOR. 'src'));
-set_include_path(get_include_path() .PATH_SEPARATOR. SRC_PATH);
+set_include_path(get_include_path() .PATH_SEPARATOR. SRC_PATH .PATH_SEPARATOR. '/usr/share/php');
 
 spl_autoload_register(function ($className) {
 	$className = trim($className, '\\');
@@ -18,7 +18,7 @@ spl_autoload_register(function ($className) {
 	$fileName .= str_replace('_', DIRECTORY_SEPARATOR, $className) . '.php';
 
 	if (!stream_resolve_include_path($fileName)) {
-		throw new Exception("Cannot find the file (\"{$fileName}\").");
+		return;
 	}
 
 	include $fileName;
