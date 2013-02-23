@@ -75,7 +75,51 @@ class RouterTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($parsedRequest, $expectedReturn);
     }
 
-    public function testMatch()
+    public function testParseRequestWithOneResourceOnUri()
+    {
+        $instance = new Router();
+
+        $method = 'GET';
+        $uri = '/resource';
+
+        $request = array(
+            'REQUEST_METHOD' => $method,
+            'REQUEST_URI'    => $uri,
+        );
+
+        $expectedReturn = array(
+            'method' => $method, 
+            'uri' => ltrim($uri, '/'),
+            'params' => array(),
+        );
+
+        $parsedRequest = $instance->parseRequest($request);
+        $this->assertEquals($parsedRequest, $expectedReturn);
+    }
+
+    public function testParseRequestWithOneResourceAndParamOnUri()
+    {
+        $instance = new Router();
+
+        $method = 'GET';
+        $uri = '/resource/123';
+
+        $request = array(
+            'REQUEST_METHOD' => $method,
+            'REQUEST_URI'    => $uri,
+        );
+
+        $expectedReturn = array(
+            'method' => $method, 
+            'uri' => 'resource/*',
+            'params' => array('resource' => '123'),
+        );
+
+        $parsedRequest = $instance->parseRequest($request);
+        $this->assertEquals($parsedRequest, $expectedReturn);
+    }
+
+    public function testMatchWithoutResource()
     {
         $instance = new Router();
 
@@ -94,7 +138,5 @@ class RouterTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals($target, $matchedTarget);
     }
-
-
 }
 

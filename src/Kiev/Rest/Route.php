@@ -42,7 +42,7 @@ class Route
         $uri = isset($uriParts['path']) ? $uriParts['path'] : '/';
 
         if ($uri !== '/') {
-            $uri = rtrim($uri, '/');
+            $uri = trim($uri, '/');
         }
 
         $this->uri = $uri;

@@ -63,7 +63,7 @@ class Router
             $uriParts = $this->explodeUri($request['REQUEST_URI']);
             $params = $this->extractParamsFromUri($uriParts);
             $uri = $this->rebuildUri($uriParts);
-            $uri = rtrim($uri, '/');
+            $uri = trim($uri, '/');
         }
 
         return array(
@@ -76,9 +76,9 @@ class Router
     public function explodeUri($uri)
     {
         $uri = parse_url($uri);
-        $uri = $uri['path'];
+        $uri = trim($uri['path'], '/') .'/';
 
-        $pattern = '#[a-zA-Z0-9]{1,}/[a-zA-Z0-9]{1,}#';
+        $pattern = '#[a-zA-Z0-9]{1,}/[a-zA-Z0-9]{0,}#';
 
         $matches = array();
         preg_match_all($pattern, $uri, $matches);
@@ -89,8 +89,11 @@ class Router
     public function rebuildUri($uriParts)
     {
         foreach ($uriParts as &$part) {
-            list($resource) = explode('/', $part);
-            $part = $resource.'/*';
+            list($resource, $param) = explode('/', $part);
+            $part = $resource;
+            if ($param != '') {
+                $part .= '/*';
+            }
         }
 
         return implode('/', $uriParts);
@@ -101,7 +104,9 @@ class Router
         $params = array();
         foreach($uriParts as $part) {
             list($key, $value) = explode('/', $part);
-            $params[$key] = $value;
+            if ($value != '') {
+                $params[$key] = $value;
+            }
         }
 
         return $params;

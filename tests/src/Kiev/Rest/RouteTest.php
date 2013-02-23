@@ -59,7 +59,7 @@ class RouteTest extends \PHPUnit_Framework_TestCase
     public function testSetterAndGetterWithDirtyUri()
     {
         $dirtyUri = '/test?query=string#test';
-        $cleanUri = '/test';
+        $cleanUri = 'test';
         $instance = new Route();
 
         $instance->setUri($dirtyUri);
