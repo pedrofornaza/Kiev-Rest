@@ -4,7 +4,7 @@
     "type": "library",
     "description": "Request router based on REST.",
     "keywords": ["rest", "router", "php"],
-    "homepage": "github.com/pedrofornaza/Kiev-Rest",
+    "homepage": "https://github.com/pedrofornaza/Kiev-Rest",
     "license" : "MIT",
     "authors" : [
         {
