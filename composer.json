@@ -8,6 +8,14 @@
     "license" : "MIT",
     "authors" : [
         {
+            "name": "Eric Queiroz",
+            "email": "queiroz.eric@gmail.com"
+        },
+        {
+            "name": "Miguel Oliveira",
+            "email": "miguelcarvalho.ti@gmail.com"
+        },
+        {
             "name": "Pedro Fornaza",
             "email": "pedro.fornaza@gmail.com"
         }
