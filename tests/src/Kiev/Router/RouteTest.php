@@ -8,7 +8,7 @@ class RouteTest extends \PHPUnit_Framework_TestCase
     {
         $instance = new Route();
 
-        $this->assertInstanceOf('Kiev\Rest\Route', $instance);
+        $this->assertInstanceOf('Kiev\Router\Route', $instance);
     }
 
     public function testConstructWithParams()

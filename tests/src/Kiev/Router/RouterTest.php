@@ -8,7 +8,7 @@ class RouterTest extends \PHPUnit_Framework_TestCase
     {
         $instance = new Router();
 
-        $this->assertInstanceOf('Kiev\Rest\Router', $instance);
+        $this->assertInstanceOf('Kiev\Router\Router', $instance);
     }
 
     public function testAddRouteWithObjectRoute()
@@ -37,7 +37,7 @@ class RouterTest extends \PHPUnit_Framework_TestCase
         $instance->addRoute($route);
 
         $routes = $instance->getRoutes();
-        $this->assertContainsOnlyInstancesOf('Kiev\Rest\Route', $routes);
+        $this->assertContainsOnlyInstancesOf('Kiev\Router\Route', $routes);
 
         $routeObject = new Route($method, $uri, $target);
         $this->assertEquals($routeObject, current($routes));
