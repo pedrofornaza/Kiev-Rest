@@ -126,6 +126,19 @@ class RouteTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($instance->match($differentMethod, $differentUri));
     }
 
+    public function testMatchWithTwoMethods()
+    {
+        $method = 'GET|POST';
+        $uri = '/';
+        $target = 'stdClass';
 
+        $instance = new Route($method, $uri, $target);
+
+        $differentMethod = 'GET';
+        $this->assertEquals($target, $instance->match($differentMethod, $uri));
+
+        $differentMethod = 'POST';
+        $this->assertEquals($target, $instance->match($differentMethod, $uri));
+    }
 }
 

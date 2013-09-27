@@ -23,8 +23,12 @@ class Route
     public function setMethod($method)
     {
         $method = strtoupper($method);
-        if (!in_array($method, self::$validMethods)) {
-            throw new \InvalidArgumentException('This method is invalid. You should use one of these: '. implode(', ', self::$validMethods) .'.');
+        $methods = explode('|', $method);
+
+        foreach ($methods as $methodPart) {
+            if (!in_array($methodPart, self::$validMethods)) {
+                throw new \InvalidArgumentException('This method is invalid. You should use one of these: '. implode(', ', self::$validMethods) .'.');
+            }
         }
 
         $this->method = $method;
@@ -73,7 +77,7 @@ class Route
 
     public function match($method, $uri)
     {
-        if ($this->getMethod() == $method &&
+        if (strpos($this->getMethod(), $method) !== false &&
             $this->getUri() == $uri &&
             $this->getTarget() != null
         ) {
