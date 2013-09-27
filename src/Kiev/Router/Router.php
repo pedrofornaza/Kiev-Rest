@@ -1,6 +1,6 @@
 <?php
 
-namespace Kiev\Rest;
+namespace Kiev\Router;
 
 class Router
 {
@@ -67,7 +67,7 @@ class Router
         }
 
         return array(
-            'method' => $method, 
+            'method' => $method,
             'uri' => $uri,
             'params' => $params,
         );

@@ -1,6 +1,6 @@
 <?php
 
-namespace Kiev\Rest;
+namespace Kiev\Router;
 
 class RouterTest extends \PHPUnit_Framework_TestCase
 {
@@ -66,7 +66,7 @@ class RouterTest extends \PHPUnit_Framework_TestCase
         );
 
         $expectedReturn = array(
-            'method' => $method, 
+            'method' => $method,
             'uri' => $uri,
             'params' => array(),
         );
@@ -88,7 +88,7 @@ class RouterTest extends \PHPUnit_Framework_TestCase
         );
 
         $expectedReturn = array(
-            'method' => $method, 
+            'method' => $method,
             'uri' => ltrim($uri, '/'),
             'params' => array(),
         );
@@ -110,7 +110,7 @@ class RouterTest extends \PHPUnit_Framework_TestCase
         );
 
         $expectedReturn = array(
-            'method' => $method, 
+            'method' => $method,
             'uri' => 'resource/*',
             'params' => array('resource' => '123'),
         );

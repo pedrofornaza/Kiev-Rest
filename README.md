@@ -1,9 +1,9 @@
-Kiev-Rest
+Kiev-Router
 ==============
 
 Description
 -----------
 
-A PHP thin library to handle requests based REST principles.
+A PHP thin library to handle requests.
 
 ### Status: on development

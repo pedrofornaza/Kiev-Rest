@@ -1,6 +1,6 @@
 <?php
 
-namespace Kiev\Rest;
+namespace Kiev\Router;
 
 class Route
 {

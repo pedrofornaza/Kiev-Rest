@@ -1,20 +1,12 @@
 {
-    "name": "kiev/rest",
+    "name": "kiev/router",
     "version": "0.2.1",
     "type": "library",
-    "description": "Request router based on REST.",
-    "keywords": ["rest", "router", "php"],
-    "homepage": "https://github.com/pedrofornaza/Kiev-Rest",
+    "description": "Request router.",
+    "keywords": ["router", "php", "request"],
+    "homepage": "https://github.com/pedrofornaza/Kiev-Router",
     "license" : "MIT",
     "authors" : [
-        {
-            "name": "Eric Queiroz",
-            "email": "queiroz.eric@gmail.com"
-        },
-        {
-            "name": "Miguel Oliveira",
-            "email": "miguelcarvalho.ti@gmail.com"
-        },
         {
             "name": "Pedro Fornaza",
             "email": "pedro.fornaza@gmail.com"
@@ -25,7 +17,7 @@
     },
     "autoload": {
         "psr-0": {
-            "Kiev\\Rest": "src"
+            "Kiev\\Router": "src"
         }
     }
 }
