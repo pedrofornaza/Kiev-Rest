@@ -40,8 +40,7 @@ class Router
         $args = $this->parseRequest($request);
         $target = $this->match($args);
         if (!$target) {
-            header('HTTP/1.1 404 Not Found');
-            return;
+            throw new \RuntimeException('No target found to the given request.');
         }
 
         return $this->dispatch($target, $args);

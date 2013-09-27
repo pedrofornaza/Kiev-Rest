@@ -138,5 +138,39 @@ class RouterTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals($target, $matchedTarget);
     }
+
+    /**
+     * @expectedException RuntimeException
+     */
+    public function testRunWithoutRoutes()
+    {
+        $instance = new Router();
+
+        $request = array(
+            'REQUEST_METHOD' => 'GET',
+            'REQUEST_URI'    => '/',
+        );
+        $instance->run($request);
+    }
+
+    /**
+     * @expectedException RuntimeException
+     */
+    public function testRunWithOneRoute()
+    {
+        $instance = new Router();
+
+        $method = 'GET';
+        $uri = '/';
+        $target = 'stdClass';
+        $route = new Route($method, $uri, $target);
+        $instance->addRoute($route);
+
+        $request = array(
+            'REQUEST_METHOD' => 'GET',
+            'REQUEST_URI'    => '/otherroute',
+        );
+        $instance->run($request);
+    }
 }
 
