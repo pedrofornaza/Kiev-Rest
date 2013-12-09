@@ -23,7 +23,6 @@ class RouteTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($target, $instance->getTarget());
     }
 
-
     public function testSetterAndGetterWithValidMethod()
     {
         $method = 'GET';
@@ -34,17 +33,15 @@ class RouteTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($method, $instance->getMethod());
     }
 
-    /**
-     * @expectedException InvalidArgumentException
-     */
     public function testSetterAndGetterWithInvalidMethod()
     {
+        $this->setExpectedException('InvalidArgumentException');
+
         $method = 'BAD_METHOD';
         $instance = new Route();
 
         $instance->setMethod($method);
     }
-
 
     public function testSetterAndGetterWithValidUri()
     {
@@ -67,7 +64,6 @@ class RouteTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($cleanUri, $instance->getUri());
     }
 
-
     public function testSetterAndGetterWithStringTarget()
     {
         $target = 'stdClass';
@@ -88,17 +84,15 @@ class RouteTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('stdClass', $instance->getTarget());
     }
 
-    /**
-     * @expectedException InvalidArgumentException
-     */
     public function testSetterAndGetterWithInvalidTarget()
     {
+        $this->setExpectedException('InvalidArgumentException');
+
         $target = '';
         $instance = new Route();
 
         $instance->setTarget($target);
     }
-
 
     public function testMatchWithRightParams()
     {
@@ -110,7 +104,6 @@ class RouteTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals($target, $instance->match($method, $uri));
     }
-
 
     public function testMatchWithWrongParams()
     {
@@ -141,4 +134,3 @@ class RouteTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($target, $instance->match($differentMethod, $uri));
     }
 }
-

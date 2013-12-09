@@ -43,13 +43,11 @@ class RouterTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($routeObject, current($routes));
     }
 
-    /**
-     * @expectedException InvalidArgumentException
-     */
     public function testAddRouteWithInvalidRoute()
     {
-        $instance = new Router();
+        $this->setExpectedException('InvalidArgumentException');
 
+        $instance = new Router();
         $instance->addRoute('invalid_route');
     }
 
@@ -204,11 +202,10 @@ class RouterTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($target, $matchedTarget);
     }
 
-    /**
-     * @expectedException RuntimeException
-     */
     public function testRunWithoutRoutes()
     {
+        $this->setExpectedException('RuntimeException');
+
         $instance = new Router();
 
         $request = array(
@@ -219,11 +216,10 @@ class RouterTest extends \PHPUnit_Framework_TestCase
         $instance->run($request);
     }
 
-    /**
-     * @expectedException RuntimeException
-     */
     public function testRunWithOneRoute()
     {
+        $this->setExpectedException('RuntimeException');
+
         $instance = new Router();
 
         $method = 'GET';
