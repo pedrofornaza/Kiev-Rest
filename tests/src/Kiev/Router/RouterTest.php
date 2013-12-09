@@ -97,6 +97,28 @@ class RouterTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($parsedRequest, $expectedReturn);
     }
 
+    public function testParseRequestWithEndSlash()
+    {
+        $instance = new Router();
+
+        $method = 'GET';
+        $uri = '/resource/';
+
+        $request = array(
+            'REQUEST_METHOD' => $method,
+            'REQUEST_URI'    => $uri,
+        );
+
+        $expectedReturn = array(
+            'method' => $method,
+            'uri' => trim($uri, '/'),
+            'params' => array(),
+        );
+
+        $parsedRequest = $instance->parseRequest($request);
+        $this->assertEquals($parsedRequest, $expectedReturn);
+    }
+
     public function testParseRequestWithOneResourceAndParamOnUri()
     {
         $instance = new Router();
@@ -113,6 +135,50 @@ class RouterTest extends \PHPUnit_Framework_TestCase
             'method' => $method,
             'uri' => 'resource/*',
             'params' => array('resource' => '123'),
+        );
+
+        $parsedRequest = $instance->parseRequest($request);
+        $this->assertEquals($parsedRequest, $expectedReturn);
+    }
+
+    public function testParseRequestWithTwoResourcesAndOneParamOnUri()
+    {
+        $instance = new Router();
+
+        $method = 'GET';
+        $uri = '/first/123/second';
+
+        $request = array(
+            'REQUEST_METHOD' => $method,
+            'REQUEST_URI'    => $uri,
+        );
+
+        $expectedReturn = array(
+            'method' => $method,
+            'uri' => 'first/*/second',
+            'params' => array('first' => '123'),
+        );
+
+        $parsedRequest = $instance->parseRequest($request);
+        $this->assertEquals($parsedRequest, $expectedReturn);
+    }
+
+    public function testParseRequestWithTwoResourcesAndTwoParamsOnUri()
+    {
+        $instance = new Router();
+
+        $method = 'GET';
+        $uri = '/first/123/second/456';
+
+        $request = array(
+            'REQUEST_METHOD' => $method,
+            'REQUEST_URI'    => $uri,
+        );
+
+        $expectedReturn = array(
+            'method' => $method,
+            'uri' => 'first/*/second/*',
+            'params' => array('first' => '123', 'second' => '456'),
         );
 
         $parsedRequest = $instance->parseRequest($request);
