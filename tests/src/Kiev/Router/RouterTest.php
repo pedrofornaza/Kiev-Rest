@@ -72,7 +72,7 @@ class RouterTest extends \PHPUnit_Framework_TestCase
         );
 
         $parsedRequest = $instance->parseRequest($request);
-        $this->assertEquals($parsedRequest, $expectedReturn);
+        $this->assertEquals($expectedReturn, $parsedRequest);
     }
 
     public function testParseRequestWithOneResourceOnUri()
@@ -94,7 +94,7 @@ class RouterTest extends \PHPUnit_Framework_TestCase
         );
 
         $parsedRequest = $instance->parseRequest($request);
-        $this->assertEquals($parsedRequest, $expectedReturn);
+        $this->assertEquals($expectedReturn, $parsedRequest);
     }
 
     public function testParseRequestWithEndSlash()
@@ -116,7 +116,7 @@ class RouterTest extends \PHPUnit_Framework_TestCase
         );
 
         $parsedRequest = $instance->parseRequest($request);
-        $this->assertEquals($parsedRequest, $expectedReturn);
+        $this->assertEquals($expectedReturn, $parsedRequest);
     }
 
     public function testParseRequestWithOneResourceAndParamOnUri()
@@ -138,7 +138,7 @@ class RouterTest extends \PHPUnit_Framework_TestCase
         );
 
         $parsedRequest = $instance->parseRequest($request);
-        $this->assertEquals($parsedRequest, $expectedReturn);
+        $this->assertEquals($expectedReturn, $parsedRequest);
     }
 
     public function testParseRequestWithTwoResourcesAndOneParamOnUri()
@@ -160,7 +160,7 @@ class RouterTest extends \PHPUnit_Framework_TestCase
         );
 
         $parsedRequest = $instance->parseRequest($request);
-        $this->assertEquals($parsedRequest, $expectedReturn);
+        $this->assertEquals($expectedReturn, $parsedRequest);
     }
 
     public function testParseRequestWithTwoResourcesAndTwoParamsOnUri()
@@ -182,7 +182,7 @@ class RouterTest extends \PHPUnit_Framework_TestCase
         );
 
         $parsedRequest = $instance->parseRequest($request);
-        $this->assertEquals($parsedRequest, $expectedReturn);
+        $this->assertEquals($expectedReturn, $parsedRequest);
     }
 
     public function testMatchWithoutResource()
@@ -201,7 +201,6 @@ class RouterTest extends \PHPUnit_Framework_TestCase
         );
 
         $matchedTarget = $instance->match($request);
-
         $this->assertEquals($target, $matchedTarget);
     }
 
@@ -216,6 +215,7 @@ class RouterTest extends \PHPUnit_Framework_TestCase
             'REQUEST_METHOD' => 'GET',
             'REQUEST_URI'    => '/',
         );
+
         $instance->run($request);
     }
 
@@ -236,6 +236,7 @@ class RouterTest extends \PHPUnit_Framework_TestCase
             'REQUEST_METHOD' => 'GET',
             'REQUEST_URI'    => '/otherroute',
         );
+
         $instance->run($request);
     }
 }
