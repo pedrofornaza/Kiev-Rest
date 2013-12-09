@@ -55,11 +55,13 @@ class Router
         }
 
         $method = strtoupper($request['REQUEST_METHOD']);
-        $uri = $request['REQUEST_URI'];
         $params = array();
 
+        $uri = parse_url($request['REQUEST_URI']);
+        $uri = $uri['path'];
+
         if ($uri !== '/') {
-            $uriParts = $this->explodeUri($request['REQUEST_URI']);
+            $uriParts = $this->explodeUri($uri);
             $params = $this->extractParamsFromUri($uriParts);
             $uri = $this->rebuildUri($uriParts);
             $uri = trim($uri, '/');
@@ -74,8 +76,7 @@ class Router
 
     public function explodeUri($uri)
     {
-        $uri = parse_url($uri);
-        $uri = trim($uri['path'], '/') .'/';
+        $uri = trim($uri, '/') .'/';
 
         $pattern = '#[a-zA-Z0-9]{1,}/[a-zA-Z0-9]{0,}#';
 

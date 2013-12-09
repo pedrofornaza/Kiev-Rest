@@ -73,6 +73,28 @@ class RouterTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expectedReturn, $parsedRequest);
     }
 
+    public function testParseRequestWithQueryString()
+    {
+        $instance = new Router();
+
+        $method = 'GET';
+        $uri = '/';
+
+        $request = array(
+            'REQUEST_METHOD' => $method,
+            'REQUEST_URI'    => $uri,
+        );
+
+        $expectedReturn = array(
+            'method' => $method,
+            'uri' => $uri,
+            'params' => array(),
+        );
+
+        $parsedRequest = $instance->parseRequest($request);
+        $this->assertEquals($expectedReturn, $parsedRequest);
+    }
+
     public function testParseRequestWithOneResourceOnUri()
     {
         $instance = new Router();
@@ -177,6 +199,50 @@ class RouterTest extends \PHPUnit_Framework_TestCase
             'method' => $method,
             'uri' => 'first/*/second/*',
             'params' => array('first' => '123', 'second' => '456'),
+        );
+
+        $parsedRequest = $instance->parseRequest($request);
+        $this->assertEquals($expectedReturn, $parsedRequest);
+    }
+
+    public function testParseRequestWithoutResourceAndQueryString()
+    {
+        $instance = new Router();
+
+        $method = 'GET';
+        $uri = '/?query=string';
+
+        $request = array(
+            'REQUEST_METHOD' => $method,
+            'REQUEST_URI'    => $uri,
+        );
+
+        $expectedReturn = array(
+            'method' => $method,
+            'uri' => '/',
+            'params' => array(),
+        );
+
+        $parsedRequest = $instance->parseRequest($request);
+        $this->assertEquals($expectedReturn, $parsedRequest);
+    }
+
+    public function testParseRequestWithResourceAndQueryString()
+    {
+        $instance = new Router();
+
+        $method = 'GET';
+        $uri = '/resource/?query=string';
+
+        $request = array(
+            'REQUEST_METHOD' => $method,
+            'REQUEST_URI'    => $uri,
+        );
+
+        $expectedReturn = array(
+            'method' => $method,
+            'uri' => 'resource',
+            'params' => array(),
         );
 
         $parsedRequest = $instance->parseRequest($request);
