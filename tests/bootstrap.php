@@ -4,7 +4,7 @@
  * WARNING: Thats an simple autoloader to make tests easier, don't use this in production.
  */
 
-define('ROOT_PATH', realpath('./'));
+define('ROOT_PATH', realpath(__DIR__.'/../'));
 define('SRC_PATH', realpath(ROOT_PATH .DIRECTORY_SEPARATOR. 'src'));
 set_include_path(get_include_path() .PATH_SEPARATOR. SRC_PATH .PATH_SEPARATOR. '/usr/share/php');
 
