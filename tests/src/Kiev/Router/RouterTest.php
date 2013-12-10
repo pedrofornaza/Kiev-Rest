@@ -43,6 +43,48 @@ class RouterTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($routeObject, current($routes));
     }
 
+    public function testAddRouteWithArrayRouteWithoutTargetKey()
+    {
+        $this->setExpectedException('InvalidArgumentException');
+
+        $instance = new Router();
+
+        $route = array(
+            'method' => 'GET',
+            'uri'    => '/',
+        );
+
+        $instance->addRoute($route);
+    }
+
+    public function testAddRouteWithArrayRouteWithoutUriKey()
+    {
+        $this->setExpectedException('InvalidArgumentException');
+
+        $instance = new Router();
+
+        $route = array(
+            'method' => 'GET',
+            'target' => 'stdClass',
+        );
+
+        $instance->addRoute($route);
+    }
+
+    public function testAddRouteWithArrayRouteWithoutMethodKey()
+    {
+        $this->setExpectedException('InvalidArgumentException');
+
+        $instance = new Router();
+
+        $route = array(
+            'uri'    => '/',
+            'target' => 'stdClass',
+        );
+
+        $instance->addRoute($route);
+    }
+
     public function testAddRouteWithInvalidRoute()
     {
         $this->setExpectedException('InvalidArgumentException');
@@ -71,6 +113,32 @@ class RouterTest extends \PHPUnit_Framework_TestCase
 
         $parsedRequest = $instance->parseRequest($request);
         $this->assertEquals($expectedReturn, $parsedRequest);
+    }
+
+    public function testParseRequestWithoutUri()
+    {
+        $this->setExpectedException('InvalidArgumentException');
+
+        $instance = new Router();
+
+        $request = array(
+            'REQUEST_METHOD' => 'GET'
+        );
+
+        $instance->parseRequest($request);
+    }
+
+    public function testParseRequestWithoutMethod()
+    {
+        $this->setExpectedException('InvalidArgumentException');
+
+        $instance = new Router();
+
+        $request = array(
+            'REQUEST_URI' => '/',
+        );
+
+        $instance->parseRequest($request);
     }
 
     public function testParseRequestWithQueryString()
