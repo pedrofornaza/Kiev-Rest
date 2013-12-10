@@ -1,4 +1,4 @@
-Kiev-Router
+Kiev-Router [![Build Status](https://travis-ci.org/pedrofornaza/Kiev-Router.png)](https://travis-ci.org/pedrofornaza/Kiev-Router)
 ==============
 
 Description
