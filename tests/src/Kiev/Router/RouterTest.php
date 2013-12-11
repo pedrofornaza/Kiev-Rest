@@ -369,4 +369,52 @@ class RouterTest extends \PHPUnit_Framework_TestCase
 
         $instance->run($request);
     }
+
+    public function testRunWithValidRequestAndRoute()
+    {
+        $instance = new Router();
+
+        $method = 'GET';
+        $uri = '/';
+        $target = 'stdClass';
+        $route = new Route($method, $uri, $target);
+        $instance->addRoute($route);
+
+        $request = array(
+            'REQUEST_METHOD' => 'GET',
+            'REQUEST_URI'    => '/',
+        );
+
+        $result = $instance->run($request);
+
+        $this->assertInstanceOf('Kiev\Router\Result', $result);
+        $this->assertEquals($target, $result->getTarget());
+        $this->assertEquals($method, $result->getMethod());
+        $this->assertEquals(array(), $result->getParams());
+    }
+
+    public function testRunWithValidRequestWithParamsAndRoute()
+    {
+        $instance = new Router();
+
+        $method = 'GET';
+        $uri = '/resource/*';
+        $target = 'stdClass';
+        $route = new Route($method, $uri, $target);
+        $instance->addRoute($route);
+
+        $request = array(
+            'REQUEST_METHOD' => 'GET',
+            'REQUEST_URI'    => '/resource/1',
+        );
+
+        $result = $instance->run($request);
+
+        $params = array('resource' => 1);
+
+        $this->assertInstanceOf('Kiev\Router\Result', $result);
+        $this->assertEquals($target, $result->getTarget());
+        $this->assertEquals($method, $result->getMethod());
+        $this->assertEquals($params, $result->getParams());
+    }
 }

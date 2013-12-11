@@ -43,7 +43,7 @@ class Router
             throw new \RuntimeException('No target found to the given request.');
         }
 
-        return $this->dispatch($target, $args);
+        return new Result($target, $args['method'], $args['params']);
     }
 
     public function parseRequest($request)
@@ -122,14 +122,4 @@ class Router
 
         return false;
     }
-
-    public function dispatch($target, $args)
-    {
-        if (is_string($target)) {
-            $target = new $target;
-        }
-
-        return call_user_func_array(array($target, $args['method']), $args['params']);
-    }
 }
-
