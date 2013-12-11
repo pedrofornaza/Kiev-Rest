@@ -60,12 +60,6 @@ class Route
 
     public function setTarget($target)
     {
-        if ($target == null ||
-           (!is_object($target) && !is_string($target))
-        ) {
-            throw new \InvalidArgumentException("The target must be a string or an object. The given value: {$target}");
-        }
-
         $this->target = $target;
     }
 

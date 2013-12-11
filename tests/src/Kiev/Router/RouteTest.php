@@ -64,7 +64,7 @@ class RouteTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($cleanUri, $instance->getUri());
     }
 
-    public function testSetterAndGetterWithStringTarget()
+    public function testSetterAndGetterTarget()
     {
         $target = 'stdClass';
         $instance = new Route();
@@ -72,26 +72,6 @@ class RouteTest extends \PHPUnit_Framework_TestCase
         $instance->setTarget($target);
 
         $this->assertEquals($target, $instance->getTarget());
-    }
-
-    public function testSetterAndGetterWithObjectTarget()
-    {
-        $target = new \stdClass();
-        $instance = new Route();
-
-        $instance->setTarget($target);
-
-        $this->assertInstanceOf('stdClass', $instance->getTarget());
-    }
-
-    public function testSetterAndGetterWithInvalidTarget()
-    {
-        $this->setExpectedException('InvalidArgumentException');
-
-        $target = '';
-        $instance = new Route();
-
-        $instance->setTarget($target);
     }
 
     public function testMatchWithRightParams()
